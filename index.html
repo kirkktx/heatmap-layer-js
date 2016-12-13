@@ -1,364 +1,107 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Heatmap-layer-js by kirkktx</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Heatmap-layer-js</h1>
+      <h2 class="project-tagline">This is a custom DynamicMapServiceLayer for Heatmap.js to work with the ArcGIS Javascript API.</h2>
+      <a href="https://github.com/kirkktx/heatmap-layer-js" class="btn">View on GitHub</a>
+      <a href="https://github.com/kirkktx/heatmap-layer-js/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/kirkktx/heatmap-layer-js/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
-        <!--The viewport meta tag is used to improve the presentation and behavior
-        of the samples on iOS devices-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>heatmap.js ArcGIS JavaScript API Heatmap Layer</title>
-        <link rel="shortcut icon"
-        type="image/png" href="http://www.patrick-wied.at/img/favicon.png" />
-        <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.10/js/dojo/dijit/themes/claro/claro.css">
-		<link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
-        <style>
-            body, html {
-                margin:0;
-                padding:0;
-                font-family:Arial;
-            }
-            h1 {
-                margin-bottom:10px;
-            }
-            h2 {
-                margin-top:0;
-            }
-            #main {
-                position:relative;
-                width:1020px;
-                padding:20px;
-                margin:auto;
-            }
-            #heatmapArea {
-                position:relative;
-                float:left;
-                width:800px;
-                height:600px;
-                border:1px dashed black;
-            }
-            #configArea {
-                position:relative;
-                float:left;
-                width:200px;
-                padding:15px;
-                padding-top:0;
-                padding-right:0;
-            }
-            .btn {
-                margin-top:25px;
-                padding:10px 20px 10px 20px;
-                -moz-border-radius:15px;
-                -o-border-radius:15px;
-                -webkit-border-radius:15px;
-                border-radius:15px;
-                border:2px solid black;
-                cursor:pointer;
-                color:white;
-                background-color:black;
-            }
-            #map {
-                width:800px;
-                height:600px;
-            }
-            #title {
-                font-family:arial;
-                display:inline-block;
-                position:absolute;
-                font-weight:bold;
-                font-size:21px;
-                line-height:28px;
-                top:20px;
-                right:20px;
-                z-index:99;
-                background:rgba(255, 255, 255, 0.65);
-                padding:10px 20px;
-                -webkit-border-radius: 3px;
-                border-radius: 3px;
-                text-shadow:1px 1px 1px #FFFFFF -webkit-box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
-                box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
-            }
-        </style>
-        <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.10/js/esri/dijit/css/Popup.css"/>
-    </head>
-    <body class="claro">
-        <div id="main">
-            	<h1>ArcGIS JavaScript API Heatmap Overlay</h1>
-	<a href="http://www.arcgis.com/home/item.html?id=3a6d8158252e4b96a8ecfb8b912df78d">Download code</a>.
-            <br
-            />
-            <br />
-            <div id="heatmapArea">
-                <div id="heatLayer"></div>
-                <div id="title">San Francisco 311 incidents</div>
-                <div id="map"></div>
-            </div>
-            <div id="configArea">
-                	<h2>Sidenotes</h2>
-This is a demonstration of a canvas heatmap overlay with the <a href="http://help.arcgis.com/en/webapi/javascript/arcgis/"
-                target="_blank">ArcGIS API for JavaScript</a>.
-                <br />
-                <br />View the <a href="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/MapServer/0"
-                target="_blank">Feature layer</a>.
-                <div id="tog" class="btn">Toggle HeatmapOverlay</div>
-                <div id="tog2" class="btn">Toggle Points</div>
-                <div id="tog3" class="btn">Local Max Off</div>
-            </div>
-            <div style="text-align:center;"><a href="http://www.patrick-wied.at/static/heatmapjs/">heatmap.js</a> by
-                <a
-                href="http://www.patrick-wied.at" target="_blank">Patrick Wied</a>
-            </div>
-        </div>
-        <div style="clear:both;"></div>
-        <div style="width:1020px; padding:20px; margin:auto;">
-             <h2>Description</h2>
+    <section class="main-content">
+      <h1>
+<a id="heatmap-layer-js" class="anchor" href="#heatmap-layer-js" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>heatmap-layer-js</h1>
 
-            <p>This is a custom DynamicMapServiceLayer for Heatmap.js to work with the
-                ArcGIS Javascript API.</p>
-             <h2>Instructions</h2>
+<p>Forked from <a href="https://github.com/Esri/heatmap-layer-js">https://github.com/Esri/heatmap-layer-js</a></p>
 
-            <ol>
-                <li>Include the heatmap.js in your HTML document and require "application/HeatmapLayer" <pre>
-        &lt;script type=&quot;text/javascript&quot; src=&quot;src/heatmap.js&quot;&gt;&lt;/script&gt;
-        </pre>
+<p>This is a custom DynamicMapServiceLayer for Heatmap.js to work with the ArcGIS Javascript API.</p>
 
-                </li>
-                <li>Add a div with an ID to hold he canvas element <pre>&lt;div id=&quot;heatLayer&quot;&gt;&lt;/div&gt;</pre>
+<p><a href="https://kirkktx.github.com/heatmap-layer-js/">View it live</a></p>
 
-                </li>
-                <li>Create the heatmap with it's settings and assign it to a global variable. <pre>
-        // create heat layer
-            heatLayer = new HeatmapLayer({
-                config: {
-                    "useLocalMaximum": false,
-                    "radius": 40,
-                    "gradient": {
-                        0.45: "rgb(000,000,255)",
-                        0.55: "rgb(000,255,255)",
-                        0.65: "rgb(000,255,000)",
-                        0.95: "rgb(255,255,000)",
-                        1.00: "rgb(255,000,000)"
-                    }
-                },
-                "map": map,
-                "opacity": 0.85
-            }, "heatLayer");
-        </pre>
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
 
-                </li>
-                <li>Add the heatLayer to the map. <pre>
-        map.addLayer(heatLayer);
-        </pre>
+<p><a href="http://www.patrick-wied.at/static/heatmapjs/">http://www.patrick-wied.at/static/heatmapjs/</a>
+heatmap.js is a JavaScript library that can be used to generate web heatmaps with the html5canvas element based on your data. Heatmap instances contain a store in order to colorize the heatmap based on relative data, which means if you're adding only a single datapoint to the store it will be displayed as the hottest(red) spot, then adding another point with a higher count, it will dynamically recalculate. The heatmaps are fully customizable - you're welcome to choose your own color gradient, change its opacity, datapoint radius and many more.</p>
 
-                </li>
-                <li>Now you just need to add data points to the heatmap. In the example above,
-                    I am adding features from a feature layer of 311 incidents. Here's an example with
-                    two features. <pre>
-        var data = [
-            {
-                attributes: {},
-                geometry: {
-                    spatialReference: {wkid: 102100}
-                    type: "point"
-                    x: -13625078.0408
-                    y: 4548494.332400002
-                }
-            },
-            {
-                attributes: {},
-                geometry: {
-                    spatialReference: {wkid: 102100}
-                    type: "point"
-                    x: -13625078.0408
-                    y: 4548494.332400002
-                }
-            }
-        ];
-        </pre>
- <pre>
-        heatLayer.setData(data);
-        </pre>
+<h2>
+<a id="instructions" class="anchor" href="#instructions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instructions</h2>
 
-                </li>
-                <li>I created a function that executes on map pan that gets all the features
-                    from a featureLayer within the map's extent.
-<pre>
-function getFeatures() {
-    // set up query
-    var q = new Query();
-    // only within extent
-    q.geometry = map.extent;
-    // give me all of them!
-    q.where = "1=1";
-    // make sure I get them back in my spatial reference
-    q.outSpatialReference = map.spatialReference;
-    // get em!
-    featureLayer.queryFeatures(q, function (featureSet) {
-        var data = [];
-        // if we get results back
-        if (featureSet && featureSet.features && featureSet.features.length > 0) {
-            // set data to features
-            data = featureSet.features;
-        }
-        // set heatmap data
-        heatLayer.setData(data);
-    });
-}
-</pre>
+<p>See example HTML file included in download.</p>
 
-                </li>
-            </ol>
-             <h2>Dependencies</h2>
+<p><a href="https://github.com/">New to Github? Get started here.</a></p>
 
-            <ul>
-                <li>HTML5 Canvas
-                    <iframe src="http://caniuse.com/canvas/embed/" width="1020"
-                    scrolling="no" frameborder="0" height="400"></iframe>
-                </li>
-                <li> <a href="http://www.patrick-wied.at/static/heatmapjs/">Heatmap.js</a>
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
 
-                </li>
-            </ul>
-        </div>
-    </body>
-    <script type="text/javascript">
-        // get current path
-            var pathRegex = new RegExp(/\/[^\/]+$/);
-            var locationPath = location.pathname.replace(pathRegex, '');
-            // Dojo Config
-            var dojoConfig = {
-                packages: [
-                    {
-                        name: "application",
-                        location: locationPath + 'src/'
-                    }
-                ]
-            };
-        </script>
-        <script type="text/javascript" src="http://js.arcgis.com/3.10/"></script>
-        <script type="text/javascript" src="src/heatmap.js"></script>
-        <script type="text/javascript">
-        require([
-            "esri/map",
-            "dojo/on",
-            "dojo/dom",
-            "esri/layers/FeatureLayer",
-            "application/HeatmapLayer",
-            "esri/tasks/query",
-            "esri/geometry/Extent",
-            "dojo/domReady!"
-        ], function(
-            Map,
-            on,
-            dom,
-            FeatureLayer,
-            HeatmapLayer,
-            Query,
-            Extent
-        ){
-            
-            // Variables
-            var map;
-            var heatLayer;
-            var featureLayer;
+<ul>
+<li>Notepad or HTML editor</li>
+<li>A little background with Javascript</li>
+<li>Experience with the <a href="http://www.esri.com/">ArcGIS Javascript API</a> would help.</li>
+</ul>
 
-            // get the features within the current extent from the feature layer
-            function getFeatures() {
-                // set up query
-                var q = new Query();
-                // only within extent
-                q.geometry = map.extent;
-                // give me all of them!
-                q.where = "1=1";
-                // make sure I get them back in my spatial reference
-                q.outSpatialReference = map.spatialReference;
-                // get em!
-                featureLayer.queryFeatures(q, function (featureSet) {
-                    var data = [];
-                    // if we get results back
-                    if (featureSet && featureSet.features && featureSet.features.length) {
-                        // set data to features
-                        data = featureSet.features;
-                    }
-                    // set heatmap data
-                    heatLayer.setData(data);
-                });
-            }
+<h2>
+<a id="resources" class="anchor" href="#resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resources</h2>
 
-       
-            // initial extent of map
-            var initExtent = new Extent({
-                xmax: -13624229.32056175,
-                xmin: -13625120.886837104,
-                ymax: 4548374.604660432,
-                ymin: 4547966.144290476,
-                "spatialReference": {
-                    "wkid": 102100
-                }
-            });
-            // create map
-            map = new Map("map", {
-                extent: initExtent,
-                sliderStyle: "small",
-                basemap: "streets"
-            });
-            
-            
-            
-     
-            // create heat layer
-            heatLayer = new HeatmapLayer({
-                "useLocalMaximum": false,
-                config: {
-                    "radius": 40,
-                    "gradient": {
-                        0.45: "rgb(000,000,255)",
-                        0.55: "rgb(000,255,255)",
-                        0.65: "rgb(000,255,000)",
-                        0.95: "rgb(255,255,000)",
-                        1.00: "rgb(255,000,000)"
-                    }
-                },
-                "map": map,
-                "opacity": 0.85
-            }, "heatLayer");
-            
-            
-            // add heat layer to map
-            map.addLayer(heatLayer);
-            // resize map
-            map.resize();
-            // create feature layer to get the points from
-            featureLayer = new FeatureLayer("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/MapServer/0", {
-                mode: FeatureLayer.MODE_ONDEMAND,
-                visible: false
-            });
-            map.addLayer(featureLayer);
-            // on map extent change
-            on(map, "extent-change", getFeatures);
-            on(dom.byId('tog'), "click", function () {
-                if (heatLayer.visible) {
-                    heatLayer.hide();
-                } else {
-                    heatLayer.show();
-                }
-            });
-            on(dom.byId('tog2'), "click", function () {
-                if (featureLayer.visible) {
-                    featureLayer.hide();
-                } else {
-                    featureLayer.show();
-                }
-            });
-            on(dom.byId('tog3'), "click", function () {
-                if (heatLayer.config.useLocalMaximum) {
-                    this.innerHTML = 'Local Max Off';
-                    heatLayer.config.useLocalMaximum = false;
-                } else {
-                    this.innerHTML = 'Local Max On';
-                    heatLayer.config.useLocalMaximum = true;
-                }
-            });
-        });
-    </script>
+<ul>
+<li><a href="http://help.arcgis.com/en/webapi/javascript/arcgis/index.html">ArcGIS for JavaScript API Resource Center</a></li>
+<li><a href="http://blogs.esri.com/esri/arcgis/">ArcGIS Blog</a></li>
+<li><a href="http://twitter.com/esri">twitter@esri</a></li>
+</ul>
+
+<h2>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Issues</h2>
+
+<p>Find a bug or want to request a new feature?  Please let us know by submitting an issue.</p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Anyone and everyone is welcome to contribute.</p>
+
+<h2>
+<a id="licensing" class="anchor" href="#licensing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Licensing</h2>
+
+<p>Copyright 2012 Esri</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+
+<p>A copy of the license is available in the repository's <a href="https://raw.github.com/Esri/heatmap-layer-js/master/license.txt">license.txt</a> file.</p>
+
+<p>Access and Use Constraints
+The library is dual-licensed under the MIT and the Beerware license, feel free to use it in your projects.</p>
+
+<p>
+</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/kirkktx/heatmap-layer-js">Heatmap-layer-js</a> is maintained by <a href="https://github.com/kirkktx">kirkktx</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
 </html>
